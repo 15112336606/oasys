@@ -1,0 +1,72 @@
+<!-- Horizontal Form -->
+ <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="pwdId" class="col-sm-2 control-label">原密码</label>
+
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name="password" id="pwdId" placeholder="原密码">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newpwdId" class="col-sm-2 control-label">新密码</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name="newpassword" id="newpwdId" placeholder="新密码">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cfgpwdId" class="col-sm-2 control-label">重复新密码</label>
+
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name="cfgpwdId" id="cfgpwdId" placeholder="重复新密码">
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      <!--  <div class="box-footer">
+          <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+          <button type="button" class="btn btn-info pull-right btn-save">Save</button>
+        </div> --> 
+        <!-- /.box-footer -->
+      </form>
+    </div>
+    <script type="text/javascript">
+   // $(function(){
+    	//异步加载菜单信息,初始化页面菜单
+   // 	$(".box-footer")
+   // 	.on("click",".btn-save",doSaveOrUpdate)
+   // });
+   $(function(){
+	   $(".modal-footer").on("click",".btn-primary",doSaveOrUpdate);
+   })
+    function doSaveOrUpdate(){
+    	var params={
+     	  		password:$("#pwdId").val(),
+    			newPassword:$("#newpwdId").val(),
+    			cfgPassword:$("#cfgpwdId").val()
+    	}
+    	var url="user/UpdatePassword.do";
+    	$.post(url,params,function(result){
+    		if(result.state==1){
+    		alert(result.message);
+    		$("#myModal").modal("hide");
+    		}else{
+    		alert(result.message);
+    		}
+    	})
+    }
+</script>
+    
+    
+    
+    
+    
+    
+    
+    
