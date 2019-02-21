@@ -8,5 +8,6 @@ public class databaseconnectiontest extends BaseTest{
 		SysBasicinfoDao sbd=ctx.getBean("sysBasicinfoDao",SysBasicinfoDao.class);
 		int a=sbd.rowCount();
 		System.out.println(a);
+		System.out.println("test");
 	}
 }
