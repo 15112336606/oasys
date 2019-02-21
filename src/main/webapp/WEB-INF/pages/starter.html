@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>JT-SYS 2 | Starter</title>
+<title>OA- SYS | Starter</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -25,7 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+<link rel="stylesheet" href="dist/css/skins/skin-green-light.min.css">
 <link rel="stylesheet"
 	href="bower_components/layer/skin/default/layer.css">
 <link rel="stylesheet"
@@ -63,7 +63,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green-light sidebar-mini">
 	<div class="wrapper">
 
 		<!-- Main Header -->
@@ -71,8 +71,8 @@ desired effect
 
 			<!-- Logo -->
 			<a href="index2.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini">动吧</span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg">动吧旅游</span>
+				<span class="logo-mini">OA系统</span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg">路通OA系统</span>
 			</a>
 
 			<!-- Header Navbar -->
@@ -99,7 +99,7 @@ desired effect
 											<!-- start message --> <a href="#">
 												<div class="pull-left">
 													<!-- User Image -->
-													<img src="dist/img/user2-160x160.jpg" class="img-circle"
+													<img src="dist/img/user3-128x128.jpg" class="img-circle"
 														alt="User Image">
 												</div> <!-- Message title and timestamp -->
 												<h4>
@@ -176,18 +176,18 @@ desired effect
 						<li class="dropdown user user-menu">
 							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <!-- The user image in the navbar-->
-								<img src="dist/img/user2-160x160.jpg" class="user-image"
+								<img src="dist/img/user3-128x128.jpg" class="user-image"
 								alt="User Image"> <!-- hidden-xs hides the username on small devices so only the image appears. -->
 								<span class="hidden-xs">CGB</span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
 								<li class="user-header"><img
-									src="dist/img/user2-160x160.jpg" class="img-circle"
+									src="dist/img/user3-128x128.jpg" class="img-circle"
 									alt="User Image">
 
 									<p>
-										CGB - Web Developer <small>Member since Nov. 2018</small>
+										OA - Web Developer <small>Member since Nov. 2018</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
@@ -231,11 +231,11 @@ desired effect
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="dist/img/user2-160x160.jpg" class="img-circle"
+						<img src="dist/img/user3-128x128.jpg" class="img-circle"
 							alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>CGB</p>
+						<p>OA</p>
 						<!-- Status -->
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
@@ -246,20 +246,52 @@ desired effect
 				<ul class="sidebar-menu" data-widget="tree">
 					<li class="header">HEADER</li>
 					<!-- Optionally, you can add icons to the links -->
-					<li class="active"><a href="#"><i class="fa fa-link"></i>
-							<span>商品管理</span></a></li>
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
-							<span>系统管理</span> <span class="pull-right-container"> <i
+							<span>邮件管理</span> <span class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-dept-id">组织管理</a></li>
-							<li><a id="load-menu-id">菜单管理</a></li>
-							<li><a id="load-role-id">角色管理</a></li>
+							<li><a id="load-writemessage-id">写短消息</a></li>
+							<li><a id="load-addresslist-id">公共通讯录</a></li>
+							<li><a id="load-addresslisttype-id">通讯录类别</a></li>
+							<li><a id="load-privateaddresslist-id">私人通讯录</a></li>
+							<li><a id="load-Inbox-id">收件箱</a></li>
+							<li><a id="load-drafts-id">草稿箱</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
+							<span>分类管理</span> <span class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a id="load-checkclass-id">查看分类</a></li>
+							<li><a id="load-addclass-id">添加分类</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
+							<span>通告管理</span> <span class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a id="load-addadvice-id">添加通告</a></li>
+							<li><a id="load-advicelist-id">通告列表</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
+							<span>职务管理</span> <span class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a id="load-duty-id">职务列表</a></li>
+							<li><a id="load-dept-id">部门列表</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
+							<span>用户管理</span> <span class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
 							<li><a id="load-user-id">用户管理</a></li>
+							<li><a id="load-password-id">密码修改</a></li>
+							<li><a id="load-calendar-id">万年历</a></li>
 							<li><a id="load-log-id"> 日志管理</a></li>
-							<li><a id="load-pwd-id"> 修改密码</a></li>
-							<li><a id="load-config-id"> 配置管理</a></li>
+							<li><a id="load-work-id">工作计划管理</a></li>
 						</ul></li>
 				</ul>
 				<!-- /.sidebar-menu -->
