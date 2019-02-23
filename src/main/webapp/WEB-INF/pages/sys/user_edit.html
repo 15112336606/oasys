@@ -15,6 +15,15 @@
           </div>
           <div class="form-group" id="pwdDiv">
             <label for="passwordId" class="col-sm-2 control-label">密码</label>
+          
+
+            <div class="col-sm-10">
+              <input type="password" class="form-control"  id="passwordId">
+            </div>
+          </div>
+          <div class="form-group" id="cfgpwdDiv">
+            <label for="passwordId" class="col-sm-2 control-label">重复密码</label>
+          
 
             <div class="col-sm-10">
               <input type="password" class="form-control"  id="passwordId">
@@ -29,6 +38,13 @@
           </div>
           
           <div class="form-group">
+            <label for="dutyId" class="col-sm-2 control-label">所属岗位</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control load-sys-duty" readonly="readonly" id="dutyId" placeholder="所属岗位">
+            </div>
+          </div>
+          
+         <!--  <div class="form-group">
             <label for="emailId" class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-10">
               <input type="text" class="form-control"  id="emailId">
@@ -39,7 +55,7 @@
               <div class="col-sm-10">
               <input type="text" class="form-control" name="mobile"  id="phoneId">
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="rolesId" class="col-sm-2 control-label">角色</label>
             <div class="col-sm-10" id="rolesId">
@@ -50,7 +66,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
           <button type="button" class="btn btn-default btn-cancel">Cancel</button>
-          <button type="button" class="btn btn-info pull-right btn-save">Save</button>
+          <button type="button" class="btn btn-success pull-right btn-save">Save</button>
         </div>
         <!-- /.box-footer -->
       </form>
@@ -68,40 +84,130 @@
 			<a class="layui-layer-btn1 btn-cancel">取消</a>
 	     </div>
       </div>
+     <div class="layui-layer layui-layer-page layui-layer-molv layer-anim" id="treeLayer2" type="page" times="2" showtime="0" contype="object"
+		style="z-index:59891016; width: 300px; height: 450px; top: 100px; left: 500px; display:none">
+		<div class="layui-layer-title" style="cursor: move;">选择职位</div>
+		<div class="layui-layer-content" style="height: 358px;">
+			<div style="padding: 10px;" class="layui-layer-wrap">
+				<ul id="zTreeId2" class="ztree"></ul>    <!-- 动态加载树 -->
+			</div>
+		</div>
+		<span class="layui-layer-setwin"> <a class="layui-layer-ico layui-layer-close layui-layer-close1 btn-cancel" ></a></span>
+		<div class="layui-layer-btn layui-layer-btn-">
+			<a class="layui-layer-btn0 btn-confirm">确定</a>
+			<a class="layui-layer-btn1 btn-cancel">取消</a>
+	     </div>
+      </div>
     </div>
+
 <script type="text/javascript" src="bower_components/ztree/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="bower_components/layer/layer.js"></script>
 <script type="text/javascript">
  var zTree; 
  //初始化zTree时会用到
+ var zTree2;
  var setting = {
 	data : {
 		simpleData : {
 			enable : true,
-			idKey : "id",  //节点数据中保存唯一标识的属性名称
-			pIdKey : "parentId",  //节点数据中保存其父节点唯一标识的属性名称
+			idKey : "ID",  //节点数据中保存唯一标识的属性名称
+			pIdKey : null,  //节点数据中保存其父节点唯一标识的属性名称
+			rootPId : null  //根节点id
+		}//json 格式javascript对象
+	}
+ }
+ var setting2 = {
+	data : {
+		simpleData : {
+			enable : true,
+			idKey : "ID",  //节点数据中保存唯一标识的属性名称
+			pIdKey : null,  //节点数据中保存其父节点唯一标识的属性名称
 			rootPId : null  //根节点id
 		}//json 格式javascript对象
 	}
  }//json 格式的javascript对象
  $(document).ready(function(){
 	 //页面加载完成以后加载角色信息并初始化页面
-	  doLoadRoles();
+	//  doLoadRoles();
 	 //事件注册
-	 $(".box-footer")
-	 .on("click",".btn-cancel",doCancel)
-	 .on("click",".btn-save",doSaveOrUpdate);
+	// $(".box-footer")
+	// .on("click",".btn-cancel",doCancel)
+	// .on("click",".btn-save",doSaveOrUpdate);
 	 
-	  $("#treeLayer")
+	 $("#treeLayer")
 	  .on("click",".btn-cancel",doHideTree)
 	  .on("click",".btn-confirm",doConfirm);
+	 $("#treeLayer2")
+	  .on("click",".btn-cancel",doHideTree2)
+	  .on("click",".btn-confirm",doConfirm2);
 	 
 	 $(".form-horizontal")
-	 .on("click",".load-sys-dept",doLoadZTreeNodes);
-	 
-	 $("form")
-	 .on("blur","#usernameId,#phoneId",isExists);
+	 .on("click",".load-sys-dept,.load-sys-duty",doLoadZTreeNodes);
+	// $("form")
+	// .on("blur","#usernameId,#phoneId",isExists);
  });
+ 
+ function doLoadZTreeNodes(){
+	 var title;
+	  var depturl="dept/findDeptZtreeNode.do";
+	  var dutyurl="duty/findDutyZtreeNode.do";
+	  if($(this).hasClass("load-sys-dept")){
+		  title="选择部门";
+		  $(".layui-layer-title").html(title);
+		  $("#treeLayer").css("display","block");
+		  $.getJSON(depturl,function(result){
+			  if(result.state==1){
+				  console.log("dept:"+result);
+				  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
+			  }else{
+				  alert(result.message);
+			  }
+		  });
+	  }else if($(this).hasClass("load-sys-duty")){
+		  title="选择岗位";
+		  $(".layui-layer-title").html(title);
+		  $("#treeLayer2").css("display","block");
+		  $.getJSON(dutyurl,function(result){
+			  if(result.state==1){
+				  console.log("duty:"+result);
+				  zTree2 = $.fn.zTree.init($("#zTreeId2"),setting2,result.data);
+			  }else{
+				  alert(result.message);
+			  }
+		  });
+	  }
+}
+ function doHideTree(){
+	  $("#treeLayer").css("display","none");
+}
+ function doHideTree2(){
+	  $("#treeLayer2").css("display","none");
+}
+ //确定按钮
+ function doConfirm(){
+	  //1.获取选中的记录(id,name);
+	  var selectedNodes=zTree.getSelectedNodes();
+	  var node=selectedNodes[0];
+	  //2.将id和name填写或绑定在具体对象上
+	  $("#deptId").val(node.name);
+	  console.log("node.id="+node.id)
+	  $("#deptId").data("deptId",node.id)
+	  //3.隐藏zTree对应的Div
+	  doHideTree();
+ }
+ //确定按钮
+ function doConfirm2(){
+	  //1.获取选中的记录(id,name);
+	  var selectedNodes=zTree2.getSelectedNodes();
+	  var node=selectedNodes[0];
+	  //2.将id和name填写或绑定在具体对象上
+	  $("#dutyId").val(node.name);
+	  console.log("node.id="+node.id)
+	  $("#dutyId").data("dutyId",node.id)
+	  //3.隐藏zTree对应的Div
+	  doHideTree2();
+ }
+ 
  //验证字段名的值是否已存在
  function isExists(){
 	var params={
@@ -115,33 +221,9 @@
 		}
 	})
  }
- function doHideTree(){
-	  $("#treeLayer").css("display","none");
- }
- //确定按钮
- function doConfirm(){
-	  //1.获取选中的记录(id,name);
-	  var selectedNodes=zTree.getSelectedNodes();
-	  var node=selectedNodes[0];
-	  //2.将id和name填写或绑定在具体对象上
-	  $("#deptId").val(node.name);
-	  console.log("node.id="+node.id)
-	  $("#deptId").data("deptId",node.id)
-	  //3.隐藏zTree对应的Div
-	  doHideTree();
- }
- 
- function doLoadZTreeNodes(){
-	  var url="dept/doFindZTreeNodes.do";
-	  $("#treeLayer").css("display","block");
-	  $.getJSON(url,function(result){
-		  if(result.state==1){
-			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
-		  }else{
-			  alert(result.message);
-		  }
-	  });
- }
+
+
+
  function doCancel(){
 	$("#mainContentId").removeData("rowData");
 	$("#mainContentId").load("user/doUserListUI.do");
