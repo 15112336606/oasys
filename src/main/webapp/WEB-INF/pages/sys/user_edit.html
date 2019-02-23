@@ -128,7 +128,7 @@
  }//json 格式的javascript对象
  $(document).ready(function(){
 	 //页面加载完成以后加载角色信息并初始化页面
-	//  doLoadRoles();
+	  doLoadRoles();
 	 //事件注册
 	// $(".box-footer")
 	// .on("click",".btn-cancel",doCancel)
@@ -147,6 +147,31 @@
 	// .on("blur","#usernameId,#phoneId",isExists);
  });
  
+ function doLoadRoles(){
+	 var url="purview/findPurviews.do"
+	 $.getJSON(url,function(result){
+		 if(result.state==1){
+		  doInitPageRoles(result.data);
+		  doInitFormData();//修改时
+		 }else{
+		  alert(result.message);
+		 }
+	 })
+ }
+ function doInitPageRoles(data){
+	 //1.获取角色要显示的位置对象
+	 var div=$("#rolesId");
+	 div.empty();
+	 //2.迭代数据，将数据追加到div
+	 var input="<input type='checkbox' name='roleId' value='[ID]'>[purviewname]"
+	 for(var i in data){
+		 //记住每次replace时都会产生一个新的字符串对象
+		 var newInput=
+		 input.replace("[ID]",data[i].ID)
+		 .replace("[purviewname]",data[i].purviewname);
+		 div.append(newInput)
+	 }
+ }
  function doLoadZTreeNodes(){
 	 var title;
 	  var depturl="dept/findDeptZtreeNode.do";
@@ -270,17 +295,7 @@
 	 params.roleIds=roleIds.toString();
 	 return params;
  }
- function doLoadRoles(){
-	 var url="role/doFindRoles.do"
-	 $.getJSON(url,function(result){
-		 if(result.state==1){
-		  doInitPageRoles(result.data);
-		  doInitFormData();//修改时
-		 }else{
-		  alert(result.message);
-		 }
-	 })
- }
+ 
  function doInitFormData(){
      var data=$("#mainContentId").data("rowData");
      if(!data)return;
@@ -300,20 +315,7 @@
 	  .prop("checked",true);
 	 }
  }
-function doInitPageRoles(data){
-	 //1.获取角色要显示的位置对象
-	 var div=$("#rolesId");
-	 div.empty();
-	 //2.迭代数据，将数据追加到div
-	 var input="<input type='checkbox' name='roleId' value='[id]'>[name]"
-	 for(var i in data){
-		 //记住每次replace时都会产生一个新的字符串对象
-		 var newInput=
-		 input.replace("[id]",data[i].id)
-		 .replace("[name]",data[i].name);
-		 div.append(newInput)
-	 }
- }
+
 </script>
     
     
