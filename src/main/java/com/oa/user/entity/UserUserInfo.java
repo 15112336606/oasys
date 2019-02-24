@@ -12,7 +12,7 @@ private String username;//用户名
 private String password;//密码
 private String salt;//盐值
 private Integer valid=1;//状态 默认启用=1,禁用=0;
-private Integer basicId;//对应的基本信息id
+private Integer basicId=null;//对应的基本信息id
 private Integer deptId;//对应的部门id
 private Integer dutyId;//对应的职务id
 private Date createdTime;//用户创建时间

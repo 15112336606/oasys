@@ -5,5 +5,5 @@
 	<select id="findPurviews" resultType="com.oa.common.vo.CheckBox">
 		select ID,purviewname from oa_purviewinfo
 	</select>
-	
+
 </mapper>

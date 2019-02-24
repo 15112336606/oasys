@@ -76,16 +76,16 @@ function doFindObjectById(id,title){
 	   //1.params
 	   var params={"id":id};
 	   //2.url
-	  // var url="user/doFindObjectById.do";
+	  var url="user/doFindObjectById.do";
 	   //3.ajax request
-	 //  $.getJSON(url,params,function(result){//JsonResult
-	//	   if(result.state==1){
-	//		  $("#mainContentId").data("rowData",result.data); 
-	 //         doLoadPage(title);
-	//	   }else{
-	//		  alert(result.message);
-	//	   }
-	//   });
+	 $.getJSON(url,params,function(result){//JsonResult
+		   if(result.state==1){
+			  $("#mainContentId").data("rowData",result.data); 
+	          doLoadPage(title);
+		   }else{
+			  alert(result.message);
+		   }
+	   });
 }
 
 function doGetCheckedId(){

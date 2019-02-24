@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class CheckBox implements Serializable{
 	private static final long serialVersionUID = -4917022286442205204L;
-	private int ID;
+	private Integer ID;
 	private String purviewname;
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
-	public void setID(int iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 	public String getPurviewname() {

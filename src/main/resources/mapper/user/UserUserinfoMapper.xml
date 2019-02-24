@@ -14,6 +14,13 @@
 		</where>
 	</sql>
 
+<!-- 添加用户 -->
+<insert id="doSaveObject" useGeneratedKeys="true" keyProperty="id">
+insert into oa_userinfo 
+(username,password,salt,valid,basicId,deptId,dutyId,createdTime,modifiedTime,createdUser,modifiedUser) values 
+(#{username},#{password},#{salt},#{valid},#{basicId},#{deptId},#{dutyId},now(),now(),#{createdUser},#{modifiedUser})
+</insert>
+
 	<!-- 根据条件查找页面信息 -->
 	<select id="findPageObjects" resultMap="UserUserInfoMap">
 		select *
@@ -35,5 +42,19 @@
 		select count(*)
 		from oa_userinfo
 		<include refid="queryWhere"></include>
+	</select>
+	
+	<!-- 根据用户名查找用户是否已存在 -->
+	<select id="findExistObject" resultType="int">
+	select count(*) 
+	from oa_userinfo 
+	where username=#{username}
+	</select>
+	
+	<!-- 通过用户id查找用户信息 -->
+	<select id="findObject" resultMap="UserUserInfoMap">
+	select * 
+	from oa_userinfo 
+	where id=#{id}
 	</select>
 </mapper>

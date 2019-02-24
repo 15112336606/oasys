@@ -18,11 +18,11 @@
           
 
             <div class="col-sm-10">
-              <input type="password" class="form-control"  id="passwordId">
+              <input type="password" class="form-control"  id="cfgpasswordId">
             </div>
           </div>
           <div class="form-group" id="cfgpwdDiv">
-            <label for="passwordId" class="col-sm-2 control-label">重复密码</label>
+            <label for="cfgpasswordId" class="col-sm-2 control-label">重复密码</label>
           
 
             <div class="col-sm-10">
@@ -130,9 +130,9 @@
 	 //页面加载完成以后加载角色信息并初始化页面
 	  doLoadRoles();
 	 //事件注册
-	// $(".box-footer")
-	// .on("click",".btn-cancel",doCancel)
-	// .on("click",".btn-save",doSaveOrUpdate);
+	 $(".box-footer")
+	 .on("click",".btn-cancel",doCancel)
+	 .on("click",".btn-save",doSaveOrUpdate);
 	 
 	 $("#treeLayer")
 	  .on("click",".btn-cancel",doHideTree)
@@ -159,15 +159,17 @@
 	 })
  }
  function doInitPageRoles(data){
+	 console.log(data);
 	 //1.获取角色要显示的位置对象
 	 var div=$("#rolesId");
 	 div.empty();
 	 //2.迭代数据，将数据追加到div
-	 var input="<input type='checkbox' name='roleId' value='[ID]'>[purviewname]"
+	 var input="<input type='checkbox' name='purview' value='[id]'>[purviewname]"
 	 for(var i in data){
 		 //记住每次replace时都会产生一个新的字符串对象
+		 console.log("yige"+data[i].id);
 		 var newInput=
-		 input.replace("[ID]",data[i].ID)
+		 input.replace("[id]",data[i].id)
 		 .replace("[purviewname]",data[i].purviewname);
 		 div.append(newInput)
 	 }
@@ -233,19 +235,7 @@
 	  doHideTree2();
  }
  
- //验证字段名的值是否已存在
- function isExists(){
-	var params={
-			"columnName":$(this).prop("name"),
-			"columnValue":$(this).val()
-	};
-	var url="user/doFindObjectByColumn.do";
-	$.post(url,params,function(result){
-		if(result.state==0){
-			alert(result.message);
-		}
-	})
- }
+
 
 
 
@@ -266,7 +256,7 @@
 	 console.log(params);
 	 $.post(url,params,function(result){
 		 console.log("b");
-		 console.log(result);
+		 console.log(result.state);
 		 if(result.state==1){
 			 alert(result.message);
 			 doCancel();
@@ -280,42 +270,60 @@
 	 var params={
 	    username:$("#usernameId").val(),
 	    password:$("#passwordId").val(),
-	    email:$("#emailId").val(),
-	    mobile:$("#phoneId").val(),
-	    deptId:$("#deptId").data("deptId")
+	    cfgpassword:$("#cfgpasswordId").val(),
+	    deptId:$("#deptId").data("deptId"),
+	    dutyId:$("#dutyId").data("dutyId")
 	 }
 	 //获取选择的角色
-	 var roleIds=new Array();
-	 $("#rolesId input[name='roleId']")
+	 var purviews=new Array();
+	 $("#rolesId input[name='purview']")
 	 .each(function(){
 		 if($(this).prop("checked")){
-			roleIds.push($(this).val());
+			purviews.push($(this).val());
 		 }
 	 });
-	 params.roleIds=roleIds.toString();
+	 console.log(purviews);
+	 console.log("purviews"+purviews.toString());
+	 params.purview=purviews.toString();
 	 return params;
- }
+}
+ 
+ 
  
  function doInitFormData(){
      var data=$("#mainContentId").data("rowData");
      if(!data)return;
      $("#pwdDiv").remove();
+     $("#cfgpwdDiv").remove();
 	 console.log(data);
 	 //初始化用户信息 
 	 $("#usernameId").val(data.user.username);
-	 $("#deptId").val(data.user.sysDept.name);
-	 console.log("data.user.sysDept.idss="+data.user.sysDept.id);
-	 $("#deptId").data("deptId",data.user.sysDept.id);
-	 $("#emailId").val(data.user.email);
-	 $("#phoneId").val(data.user.mobile);
+	 $("#deptId").val(data.user.dept);
+	 $("#deptId").data("deptId",data.user.dept);
+	 $("#dutyId").val(data.user.duty);
+	 $("#dutyId").data("dutyId",data.user.duty);
 	 //初始化用户角色信息
-	 var ids=data.roleIds;
+	 var ids=data.purview;
+	 console.log("ids"+ids);
 	 for(var i in ids){
 	  $("#rolesId input[value='"+ids[i]+"']")
 	  .prop("checked",true);
 	 }
  }
 
+ //验证字段名的值是否已存在
+ function isExists(){
+	var params={
+			"columnName":$(this).prop("name"),
+			"columnValue":$(this).val()
+	};
+	var url="user/doFindObjectByColumn.do";
+	$.post(url,params,function(result){
+		if(result.state==0){
+			alert(result.message);
+		}
+	})
+ }
 </script>
     
     
