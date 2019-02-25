@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 public interface UserUserPurviewDao {
 	int insertObject(@Param("userId")Integer userId,@Param("purview")Integer[] purview);
 	List<Integer> findPurviewsById(Integer id);
+	int deleteObjectById(Integer id);
 }

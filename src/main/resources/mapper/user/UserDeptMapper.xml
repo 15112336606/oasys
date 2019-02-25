@@ -3,8 +3,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oa.user.dao.UserDeptDao">
 <!-- 通过部门id找部门 -->
-	<select id="findById" resultType="String">
-		select department from oa_departmentinfo where ID=#{deptId}
+	<select id="findById" resultType="com.oa.user.entity.UserDepartment">
+		select * from oa_departmentinfo where ID=#{deptId}
 	</select>
 	
 	<!-- 通过部门找部门id -->

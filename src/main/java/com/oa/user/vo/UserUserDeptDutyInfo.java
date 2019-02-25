@@ -5,6 +5,9 @@ package com.oa.user.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.oa.user.entity.UserDepartment;
+import com.oa.user.entity.UserDuty;
+
 public class UserUserDeptDutyInfo implements Serializable{
 	private static final long serialVersionUID = 6047300312907787019L;
 private Integer id;
@@ -13,8 +16,8 @@ private String password;//密码
 private String salt;//盐值
 private Integer valid=1;//状态 默认启用=1,禁用=0;
 private Integer basicId;//对应的基本信息id
-private String dept;//对应的部门
-private String duty;//对应的职务
+private UserDepartment dept;//对应的部门
+private UserDuty duty;//对应的职务
 private Date createdTime;//用户创建时间
 private Date modifiedTime;//用户修改时间
 private String createdUser;//操作者
@@ -55,16 +58,16 @@ public Integer getBasicId() {
 public void setBasicId(Integer basicId) {
 	this.basicId = basicId;
 }
-public String getDept() {
+public UserDepartment getDept() {
 	return dept;
 }
-public void setDept(String dept) {
+public void setDept(UserDepartment dept) {
 	this.dept = dept;
 }
-public String getDuty() {
+public UserDuty getDuty() {
 	return duty;
 }
-public void setDuty(String duty) {
+public void setDuty(UserDuty duty) {
 	this.duty = duty;
 }
 public Date getCreatedTime() {

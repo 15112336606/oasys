@@ -4,14 +4,11 @@
 <mapper namespace="com.oa.user.dao.UserUserInfoDao">
 
 	<sql id="queryWhere">
-		<where>
 			<if test="username!=null and username!=''">
-				username like concat("%",#{username},"%") 
-			</if>
-			<if test="deptId!=null and deptId!=''">
-				deptId=#{deptId}
-			</if>
-		</where>
+				where username like concat("%",#{username},"%") or 
+				(select department from oa_departmentinfo where ID=deptId) like concat("%",#{username},"%") or 
+				(select dutyname from oa_dutyinfo where ID=dutyId) like concat("%",#{username},"%")
+				</if>
 	</sql>
 
 <!-- 添加用户 -->
@@ -57,4 +54,43 @@ insert into oa_userinfo
 	from oa_userinfo 
 	where id=#{id}
 	</select>
+	
+	<!-- 修改用户信息 -->
+	<update id="updateObject">
+	update oa_userinfo 
+	<set>
+	<if test="username!=null and username!=''">
+	username=#{username},
+	</if>
+	<if test="deptId!=null and deptId!=''">
+	deptId=#{deptId},
+	</if>
+	<if test="dutyId!=null and dutyId!=''">
+	dutyId=#{dutyId},
+	</if>
+	<if test="modifiedUser!=null and modifiedUser!=''">
+                modifiedUser=#{modifiedUser},
+             </if>
+             modifiedTime=now()
+	</set>
+	where id=#{id}
+	</update>
+	
+	<!-- 修改权限信息 -->
+	<update id="updateValidById">
+	update oa_userinfo 
+	set valid=#{valid},
+	modifiedUser=#{modifiedUser},
+	modifiedTime=now()
+	where id=#{id}
+	</update>
+	
+	<!-- 修改密码 -->
+	<update id="updatePassword">
+	update oa_userinfo 
+	set salt=#{salt},
+	password=#{password},
+	modifiedTime=now()
+	where username=#{username}
+	</update>
 </mapper>

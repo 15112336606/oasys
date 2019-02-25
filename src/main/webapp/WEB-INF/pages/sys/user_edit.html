@@ -298,10 +298,10 @@
 	 console.log(data);
 	 //初始化用户信息 
 	 $("#usernameId").val(data.user.username);
-	 $("#deptId").val(data.user.dept);
-	 $("#deptId").data("deptId",data.user.dept);
-	 $("#dutyId").val(data.user.duty);
-	 $("#dutyId").data("dutyId",data.user.duty);
+	 $("#deptId").val(data.user.dept.department);
+	 $("#deptId").data("deptId",data.user.dept.id);
+	 $("#dutyId").val(data.user.duty.dutyname);
+	 $("#dutyId").data("dutyId",data.user.duty.id);
 	 //初始化用户角色信息
 	 var ids=data.purview;
 	 console.log("ids"+ids);

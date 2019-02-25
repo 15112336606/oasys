@@ -3,17 +3,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oa.user.dao.UserUserPurviewDao">
 	<insert id="insertObject" useGeneratedKeys="true">
-	insert into oa_user_purview 
-	(user_id,purview_id) values 
-	<foreach collection="purview" separator="," item="item">
-	(#{userId},#{item})
-	</foreach>
+		insert into oa_user_purview
+		(user_id,purview_id) values
+		<foreach collection="purview" separator="," item="item">
+			(#{userId},#{item})
+		</foreach>
 	</insert>
-	
-		<select id="findPurviewsById" resultType="Integer">
-		select purview_id 
-		from oa_user_purview 
-		where id=#{id}
-		
+
+	<select id="findPurviewsById" resultType="Integer">
+		select purview_id
+		from
+		oa_user_purview
+		where user_id=#{id}
 	</select>
+
+	<delete id="deleteObjectById">
+		delete from oa_user_purview
+		where user_id=#{id}
+	</delete>
 </mapper>

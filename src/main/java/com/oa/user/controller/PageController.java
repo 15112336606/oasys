@@ -18,4 +18,8 @@ public class PageController {
 	public String doPageUI(){
 		return "common/page";
 	}
+	@RequestMapping("doUpdatePwd")
+	public String doUpdatePwd(){
+		return "sys/pwd_edit";
+	}
 }

@@ -25,8 +25,8 @@ public class SysUserController {
 	}
 	@RequestMapping("findPageObjects")
 	@ResponseBody
-	public JsonResult findPageObjects(String username,String dept,int pageCurrent){
-		PageObject<UserUserDeptDutyInfo> po = userUserInfoService.findPageObjects(username, dept, pageCurrent);
+	public JsonResult findPageObjects(String username,int pageCurrent){
+		PageObject<UserUserDeptDutyInfo> po = userUserInfoService.findPageObjects(username, pageCurrent);
 		return new JsonResult(po);
 	}
 	@RequestMapping("doUserEditUI")
@@ -44,5 +44,26 @@ public class SysUserController {
 	public JsonResult doFindObjectById(Integer id){
 		Map<String, Object> map = userUserInfoService.doFindObjectById(id);
 		return new JsonResult(map);
+	}
+	@RequestMapping("doUpdateObject")
+	@ResponseBody
+	public JsonResult doUpdateObject(UserUserInfo user,Integer[] purview){
+		userUserInfoService.doUpdateObject(user, purview);
+		return new JsonResult("update ok");
+	}
+	@RequestMapping("doValidById")
+	@ResponseBody
+	public JsonResult doValidById(Integer id,Integer valid,String modifiedUser){
+		modifiedUser="admin";
+		userUserInfoService.doUpdateValidById(id, valid, modifiedUser);
+		
+		return new JsonResult("update ok");
+	}
+	
+	@ResponseBody
+	@RequestMapping("UpdatePassword")
+	public JsonResult UpdatePassword(String password,String newPassword,String cfgPassword){
+		userUserInfoService.doUpdatePassword(password, newPassword, cfgPassword);
+		return new JsonResult("修改密码成功");
 	}
 }

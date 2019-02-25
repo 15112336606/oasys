@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oa.user.dao.UserDutyDao">
-	<select id="findById" resultType="String">
-		select dutyname from oa_dutyinfo where ID=#{dutyId}
+	<select id="findById" resultType="com.oa.user.entity.UserDuty">
+		select * from oa_dutyinfo where ID=#{dutyId}
 	</select>
 	
 	<select id="findDutyZtreeNode" resultType="com.oa.common.vo.DutyNode">

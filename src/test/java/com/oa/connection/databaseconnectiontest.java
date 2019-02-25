@@ -16,8 +16,8 @@ public class databaseconnectiontest extends BaseTest{
 	@Test
 	public void userinfotest(){
 		UserUserInfoDao uui = ctx.getBean("userUserInfoDao",UserUserInfoDao.class);
-		int rowCount = uui.getRowCount(null, null);
-		List<UserUserDeptDutyInfo> find = uui.findPageObjects(null, null, 1, 3);
+		int rowCount = uui.getRowCount(null);
+		List<UserUserDeptDutyInfo> find = uui.findPageObjects(null, 1, 3);
 		System.out.println(rowCount);
 		for(UserUserDeptDutyInfo uu:find){
 			System.out.println(uu);

@@ -7,7 +7,7 @@
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户名或者部门名称">
+							class="form-control pull-right" placeholder="用户名、部门名称或岗位">
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
@@ -53,8 +53,41 @@ $(document).ready(function(){
 	$(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
 	.on("click",".btn-add,.btn-update",doLoadEditUI);
+	$("tbody").on("click",".btn-valid",doValidById);
 });
-
+function doValidById(){
+	   //params
+	   var rowData=$(this).parents("tr").data("rowData");
+	   var id=rowData.id;
+	   console.log("id"+id);
+	   var newValid=rowData.valid?0:1;
+	   var params={"id":rowData.id,"valid":newValid};
+	   //url
+	   var url="user/doValidById.do";
+	   //ajax request
+    var btn=$(this);//获取点击的button对象
+	   $.post(url,params,function(result){
+ 	   if(result.state==1){
+ 		   alert(result.message);
+ 		   //doGetObjects();//重新查询刷新
+ 		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
+ 		   doEditRow(btn,rowData.valid);
+ 	   }else{
+ 		   alert(result.message);
+ 	   }
+    })    
+}    
+function doEditRow(obj,valid){
+	   //1.修改按钮上的内容
+	   $(obj).html(valid?"启用":"禁用");
+	   //2.修改tr中第5个td中的内容(查询API文档)
+	   var tr=$(obj).parents("tr");
+	   tr.find("td:eq(5)").text(valid?"禁用":"启用");
+	   //3.获取当前行tr对象，然后重新绑定新的值
+	   var rowData=tr.data("rowData")
+	   rowData.valid=valid?0:1;
+	   tr.data("rowData",rowData);
+}
 function doLoadEditUI(){
 	var title;
 	if($(this).hasClass("btn-add")){
@@ -144,8 +177,8 @@ function doSetTableBodyRows(data){
 	   console.log(row);
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	     "<td>"+row.username+"</td>"+
-	     "<td>"+row.dept+"</td>"+
-	     "<td>"+row.duty+"</td>"+
+	     "<td>"+row.dept.department+"</td>"+
+	     "<td>"+row.duty.dutyname+"</td>"+
 	     "<td>"+row.createdUser+"</td>"+
 	     "<td>"+(row.valid?"启用":"禁用")+"</td>"+
 	     "<td>"+new Date(row.createdTime).toLocaleString()+"</td>"+
@@ -207,38 +240,7 @@ function doSetTableBodyRows(data){
 	   }) 
    }
    //禁用和启用操作
-   function doValidById(){
-	   //params
-	   var rowData=$(this).parents("tr").data("rowData");
-	   var id=rowData.id;
-	   var newValid=rowData.valid?0:1;
-	   var params={"id":rowData.id,"valid":newValid};
-	   //url
-	   var url="user/doValidById.do";
-	   //ajax request
-       var btn=$(this);//获取点击的button对象
-	   $.post(url,params,function(result){
-    	   if(result.state==1){
-    		   alert(result.message);
-    		   //doGetObjects();//重新查询刷新
-    		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
-    		   doEditRow(btn,rowData.valid);
-    	   }else{
-    		   alert(result.message);
-    	   }
-       })    
-   }    
-   function doEditRow(obj,valid){
-	   //1.修改按钮上的内容
-	   $(obj).html(valid?"启用":"禁用");
-	   //2.修改tr中第5个td中的内容(查询API文档)
-	   var tr=$(obj).parents("tr");
-	   tr.find("td:eq(5)").text(valid?"禁用":"启用");
-	   //3.获取当前行tr对象，然后重新绑定新的值
-	   var rowData=tr.data("rowData")
-	   rowData.valid=valid?0:1;
-	   tr.data("rowData",rowData);
-   }
+  
    //处理查询按钮事件
    function doQueryObjects(){
 	   $("#pageId").data("pageCurrent",1);

@@ -29,19 +29,19 @@
           </div>
         </div>
         <!-- /.box-body -->
-      <!--  <div class="box-footer">
+        <div class="box-footer">
           <button type="button" class="btn btn-default btn-cancel">Cancel</button>
           <button type="button" class="btn btn-info pull-right btn-save">Save</button>
-        </div> --> 
+        </div> 
         <!-- /.box-footer -->
       </form>
     </div>
     <script type="text/javascript">
-   // $(function(){
+    $(function(){
     	//异步加载菜单信息,初始化页面菜单
-   // 	$(".box-footer")
-   // 	.on("click",".btn-save",doSaveOrUpdate)
-   // });
+    	$(".box-footer")
+    	.on("click",".btn-save",doSaveOrUpdate)
+    });
    $(function(){
 	   $(".modal-footer").on("click",".btn-primary",doSaveOrUpdate);
    })
@@ -55,7 +55,7 @@
     	$.post(url,params,function(result){
     		if(result.state==1){
     		alert(result.message);
-    		$("#myModal").modal("hide");
+    	//	$("#myModal").modal("hide");
     		}else{
     		alert(result.message);
     		}
