@@ -12,6 +12,7 @@ public class databaseconnectiontest extends BaseTest{
 		UserBasicinfoDao sbd=ctx.getBean("userBasicinfoDao",UserBasicinfoDao.class);
 		int a=sbd.rowCount();
 		System.out.println(a);
+		System.out.println("test");
 	}
 	@Test
 	public void userinfotest(){
