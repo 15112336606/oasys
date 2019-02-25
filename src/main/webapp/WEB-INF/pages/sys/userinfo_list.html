@@ -7,7 +7,7 @@
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户名或者部门名称">
+							class="form-control pull-right" placeholder="用户名">
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
@@ -27,8 +27,8 @@
 							<th>ID</th>
 							<th>用户名</th>
 							<th>部门</th>
-							<th>岗位</th>
-							<th>开户人</th>
+							<th>邮箱</th>
+							<th>手机号</th>
 							<th>状态</th>
 							<th>创建时间</th>
 							<th>修改时间</th>
@@ -46,113 +46,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#pageId").load("doPageUI.do",function(){
-		doGetObjects();
-	})
-	$(".input-group-btn")
-	   .on("click",".btn-search",doQueryObjects)
-	.on("click",".btn-add,.btn-update",doLoadEditUI);
-});
-
-function doLoadEditUI(){
-	var title;
-	if($(this).hasClass("btn-add")){
-		title="添加用户";
-		doLoadPage(title);
-	}else if($(this).hasClass("btn-update")){
-		title="修改用户";
-		var id=doGetCheckedId();
-		console.log("id="+id);
-		if(!id){
-			alert("请先选择");
-			return;
-		}
-		doFindObjectById(id,title);
-	}
-	
-}
-function doFindObjectById(id,title){
-	   //1.params
-	   var params={"id":id};
-	   //2.url
-	  var url="user/doFindObjectById.do";
-	   //3.ajax request
-	 $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
-			  $("#mainContentId").data("rowData",result.data); 
-	          doLoadPage(title);
-		   }else{
-			  alert(result.message);
-		   }
-	   });
-}
-
-function doGetCheckedId(){
-	 return $("tbody input[name='radioId']:checked").val();
-}
-function doLoadPage(title){
-	   var url="user/doUserEditUI.do"
-	   $("#mainContentId").load(url,function(){
-		   $(".box-title").html(title);
-	   }) 
-}
-
-
-
-
-
-function doQueryObjects(){
-	$("#pageId").data("pageCurrent",1);
-	   doGetObjects();
-}
-function doGetObjects(){
-	   var url="user/findPageObjects.do";
-	   var pageCurrent=$("#pageId").data("pageCurrent");
-	   if(!pageCurrent)pageCurrent=1;
-	   var params={"pageCurrent":pageCurrent}
-	   params.username=$("#searchNameId").val().trim();
-	   params.dept=$("#searchNameId").val().trim();
-	   console.log(params);
-	   $.getJSON(url,params,function(result){
-		   console.log(result);
-		   doHandleResponseResult(result);
-	   });
-}
-function doHandleResponseResult(result){
-	 if(result.state==1){
-		  doSetTableBodyRows(result.data.records);
-		  doSetPagination(result.data);
-		}else{
-		  alert(result.message);
-	   }
-};
-function doSetTableBodyRows(data){
-	  //1.获取tbody对象，并清空内容
-	  var tBody=$("#tbodyId");
-	  tBody.empty();
-	  //2.迭代data内容将数据追加到tbody中
-	  for(var i in data){
-		  var tr=$("<tr></tr>");
-		  tr.data("rowData",data[i]);
-		  var tds=doCreateTds(data[i]);
-		  tr.append(tds);
-		  tBody.append(tr);
-	  }
- }
- function doCreateTds(row){
-	   console.log(row);
-	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
-	     "<td>"+row.username+"</td>"+
-	     "<td>"+row.dept+"</td>"+
-	     "<td>"+row.duty+"</td>"+
-	     "<td>"+row.createdUser+"</td>"+
-	     "<td>"+(row.valid?"启用":"禁用")+"</td>"+
-	     "<td>"+new Date(row.createdTime).toLocaleString()+"</td>"+
-	     "<td>"+new Date(row.modifiedTime).toLocaleString()+"</td>"+
-	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.valid?"禁用":"启用")+"</button></td>"; 
-     return tds;
- }
   /* $(document).ready(function(){
 	   $("#pageId").load("doPageUI.do",function(){
 		   doGetObjects();
@@ -245,7 +138,18 @@ function doSetTableBodyRows(data){
 	   doGetObjects();
    }
    //页面加载完成异步加载当前页数据
-   
+   function doGetObjects(){
+	   var url="user/doFindPageObjects.do";
+	   var pageCurrent=$("#pageId").data("pageCurrent");
+	   if(!pageCurrent)pageCurrent=1;
+	   var params={"pageCurrent":pageCurrent}
+	   params.username=$("#searchNameId").val().trim();
+	   console.log(params);
+	   $.getJSON(url,params,function(result){
+		   console.log(result);
+		   doHandleResponseResult(result);
+	   });
+   }
    function doHandleResponseResult(result){
 	   if(result.state==1){
 		  doSetTableBodyRows(result.data.records);

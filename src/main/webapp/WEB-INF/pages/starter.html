@@ -288,6 +288,7 @@ desired effect
 						</span> </a>
 						<ul class="treeview-menu">
 							<li><a id="load-user-id">用户管理</a></li>
+							<li><a id="load-userinfo-id">个人信息</a></li>
 							<li><a id="load-password-id">密码修改</a></li>
 							<li><a id="load-calendar-id">万年历</a></li>
 							<li><a id="load-log-id"> 日志管理</a></li>
@@ -415,7 +416,7 @@ desired effect
 				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary btn-save">Save
+					<button type="button" class="btn btn-success btn-save">Save
 						changes</button>
 				</div>
 			</div>
@@ -444,7 +445,7 @@ desired effect
 					<button type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
+			<!-- /.modal-  -->
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
@@ -460,14 +461,12 @@ desired effect
 	<!-- AdminLTE App -->
 	<script src="dist/js/adminlte.min.js"></script>
 	<script type="text/javascript">
-	//页面加载完成以后执行
+	//页面加载完成以后执行	
 	$(function(){
-		doLoadUI("load-log-id","log/doLogListUI.do");
-		doLoadUI("load-menu-id","menu/doMenuListUI.do");
-		doLoadUI("load-dept-id","dept/doDeptListUI.do");
-		doLoadUI("load-role-id","role/doRoleListUI.do");
-		doLoadUI("load-user-id","user/doUserListUI.do");
 		doLoadUI("load-pwd-id","user/doUpdatePwdUI.do");
+		doLoadUI("load-user-id","user/doUserListUI.do");
+		doLoadUI("load-calendar-id","doFindCalender.do");
+		doLoadUI("load-userinfo-id","userinfo/doFindUserInfoListUI.do");
 	$(".user-footer").on("click",".btn-flat",function(){
 		$(".modal-body").load("user/doUpdatePwdUI.do",function(){
 		$("#myModal").modal("show");
@@ -481,16 +480,16 @@ desired effect
 			$("#mainContentId").load(url);
 		})
 	}
-  //$(function(){
-	  //在id为load-log-id的对象上注册一个点击事件
-	//  $("#load-log-id").click(function(){//事件处理函数
+  /*$(function(){
+	  在id为load-log-id的对象上注册一个点击事件
+	  $("#load-log-id").click(function(){//事件处理函数
 		  //在id为mainContentId的位置异步加载一个url对应的资源
 		  //并将服务器返回的资源插入到mainContentId位置
-		//  $("#mainContentId").load("log/doLogListUI.do");
+		  $("#mainContentId").load("log/doLogListUI.do");
 	  	  //其中load函数为juqery中的一个异步加载函数(底层会
 	  	  //通过XmlHttpRequest对象发起请求)
-	 // })
- // })
+	  })
+  })*/
 </script>
 	<!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

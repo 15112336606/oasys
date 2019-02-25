@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.oa.sys.dao.SysBasicinfoDao">
-	<select id="rowCount" resultType="int">
-		select count(*) from oa_basicinfo
+<mapper namespace="com.oa.user.dao.UserPurviewDao">
+	<select id="findPurviews" resultType="com.oa.common.vo.CheckBox">
+		select ID,purviewname from oa_purviewinfo
 	</select>
+
 </mapper>
