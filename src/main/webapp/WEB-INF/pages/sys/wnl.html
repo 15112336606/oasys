@@ -31,19 +31,19 @@
 						<div id="external-events">
 							<div
 								class="external-event bg-green ui-draggable ui-draggable-handle"
-								style="position: relative;">Lunch</div>
+								style="position: relative;">外出</div>
 							<div
 								class="external-event bg-yellow ui-draggable ui-draggable-handle"
-								style="position: relative;">Go home</div>
+								style="position: relative;">回家</div>
 							<div
 								class="external-event bg-aqua ui-draggable ui-draggable-handle"
-								style="position: relative;">Do homework</div>
+								style="position: relative;">工作</div>
 							<div
 								class="external-event bg-light-blue ui-draggable ui-draggable-handle"
-								style="position: relative;">Work on UI design</div>
+								style="position: relative;">吃饭</div>
 							<div
 								class="external-event bg-red ui-draggable ui-draggable-handle"
-								style="position: relative;">Sleep tight</div>
+								style="position: relative;">睡觉</div>
 							<div class="checkbox">
 								<label for="drop-remove"> <input type="checkbox"
 									id="drop-remove"> remove after drop
@@ -111,7 +111,7 @@
 					<div class="box-body no-padding">
 						<!-- THE CALENDAR -->
 						<div id="calendar" class="fc fc-ltr fc-unthemed">
-	<!-- 						<div class="fc-toolbar">
+							<!-- 						<div class="fc-toolbar">
 								<div class="fc-left">
 									<div class="fc-button-group">
 										<button type="button"
@@ -602,7 +602,8 @@
 									</table>
 								</div>
 							</div>
-						--></div>
+						-->
+						</div>
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -630,8 +631,14 @@
 	<script src="dist/js/moment.min.js"></script>
 	<script src="plugins/fullcalendar/fullcalendar.min.js"></script>
 	<script>
+	
   $(function () {
 
+	  $(".no-padding").on("click",".fc-content",function(){
+		  $(this).remove();
+		  console.log($(this).closest());
+	  })
+	  
     /* initialize the external events
      -----------------------------------------------------------------*/
     function ini_events(ele) {
@@ -665,6 +672,31 @@
     var d = date.getDate(),
         m = date.getMonth(),
         y = date.getFullYear();
+    console.log("d:"+d);
+    console.log("m:"+m);
+    console.log("y:"+y);
+    $.getJSON("memory/findObjects.do",function(result){
+		 var memory=JSON.stringify(result.data);
+		 console.log("memory"+memory);
+		 console.log(result.data[0].title);
+		 var array=[];
+		 console.log("{title:'"+result.data[0].title+"',start:"+result.data[0].start+"}");
+		 console.log("new Date")
+		 console.log(new Date(result.data[0].start))
+		 console.log("array"+array);
+		 console.log(result.data.length);
+		 for(var i=0;i<result.data.length;i++){
+			 var date=new Date(result.data[i].start);
+			 var title=result.data[i].title;
+			 var backgroundColor=result.data[i].backgroundColor;
+			 var borderColor=result.data[i].borderColor;
+			 console.log("bit date"+date);
+			 array.push({title:title,start:date,allDay:true,backgroundColor:backgroundColor,borderColor:borderColor});
+		 }
+		 console.log(array);
+		console.log("date"+new Date(2019, 1, 28));
+		console.log("JSON")
+	  console.log((JSON.stringify(array)).replace(/\"/g,""));
     $('#calendar').fullCalendar({
       header: {
         left: 'prev,next today',
@@ -678,12 +710,14 @@
         day: 'day'
       },
       //Random default events
-      events: [
-        {
-          title: 'All Day Event',
-          start: new Date(y, m, 1),
-          backgroundColor: "#f56954", //red
-          borderColor: "#f56954" //red
+    	  //memory
+    	//array
+      events:
+    	  array
+      /*  [{
+          title: 'chishi',
+          start: new Date(result.data[0].start),
+          backgroundColor: "rgb(221,75,57)"
         },
         {
           title: 'Long Event',
@@ -720,39 +754,56 @@
           start: new Date(y, m, 28),
           end: new Date(y, m, 29),
           url: 'http://google.com/',
-          backgroundColor: "#3c8dbc", //Primary (light-blue)
+          backgroundColor: "#3c8dbc", //Primary (lisght-blue)
           borderColor: "#3c8dbc" //Primary (light-blue)
         }
-      ],
+      ]*/,
       editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar !!!
-      drop: function (date, allDay) { // this function is called when something is dropped
-
-        // retrieve the dropped element's stored Event Object
+      droppable: true, // 这允许将事情放到日历上
+      drop: function (date, allDay) { // 当删除某些内容时调用此函数
+        // 检索删除的元素的存储事件对象
         var originalEventObject = $(this).data('eventObject');
-
-        // we need to copy it, so that multiple events don't have a reference to the same object
+		console.log("originalEventObject.title:"+originalEventObject.title);
+        // 我们需要复制它，这样多个事件就不会引用同一个对象
         var copiedEventObject = $.extend({}, originalEventObject);
-
-        // assign it the date that was reported
+        // 将报告的日期分配给它
         copiedEventObject.start = date;
         copiedEventObject.allDay = allDay;
         copiedEventObject.backgroundColor = $(this).css("background-color");
         copiedEventObject.borderColor = $(this).css("border-color");
-
-        // render the event on the calendar
-        // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+        console.log(copiedEventObject.backgroundColor)
+        console.log(date);
+        console.log(date._d);
+        // 在日历上呈现事件
+        // 最后一个“true”参数决定事件是否“坚持” (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
         $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
         // is the "remove after drop" checkbox checked?
         if ($('#drop-remove').is(':checked')) {
-          // if so, remove the element from the "Draggable Events" list
+          // 如果是，从“可拖动事件”列表中删除元素
           $(this).remove();
         }
 
+      
+   var params={
+   		 start:date._d,
+   		 title:originalEventObject.title,
+   		 backgroundColor:copiedEventObject.backgroundColor,
+   		 borderColor:copiedEventObject.borderColor
+    }
+   console.log(params);
+     $.post("memory/insertObject.do",params,function(result){
+   	  if(result.state==1){
+   		  alert(result.message);
+   	  }else{
+   		  alert(result.message);
+   		  
+   	  }
+     })
       }
+    
+    })
     });
-
     /* ADDING EVENTS */
     var currColor = "#3c8dbc"; //Red by default
     //Color chooser button
@@ -780,11 +831,11 @@
 
       //Add draggable funtionality
       ini_events(event);
-
       //Remove event from text input
       $("#new-event").val("");
     });
   });
+  
 </script>
 </body>
 </html>

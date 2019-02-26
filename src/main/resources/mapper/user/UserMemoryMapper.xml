@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.user.dao.UserMemoryDao">
+<!-- 将备忘数据持久化到数据库 -->
+<insert id="insertObject" useGeneratedKeys="true" keyProperty="id">
+insert into oa_memory (username,start,title,backgroundColor,borderColor) values 
+(#{username},#{start},#{title},#{backgroundColor},#{borderColor})
+</insert>
+
+<!-- 从查找备忘录 -->
+<select id="findObjects" resultType="com.oa.user.vo.Memory">
+select title,start,backgroundColor,borderColor 
+from oa_memory 
+where username=#{username}
+</select>
+</mapper>
