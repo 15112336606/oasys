@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,9 +99,10 @@ public class UserUserInfoServiceImpl implements UserUserInfoService{
 	@Override
 	public int doUpdatePassword(String password, String newPassword, String cfgPassword) {
 		//...
-		String username ="lili";
-		String salt="d7aa49ef-ed6a-4843-9dfa-3b45328a86a7";
-		String userpassword="bb973e1b1be037d089fe49e5e0c264a4";
+		UserUserInfo user=(UserUserInfo)SecurityUtils.getSubject().getPrincipal();
+		String username =user.getUsername();
+		String salt=user.getSalt();
+		String userpassword=user.getPassword();
 		if(StringUtils.isEmpty(password))throw new ServiceException("请输入原密码");
 		if(StringUtils.isEmpty(newPassword))throw new ServiceException("请输入新密码");
 		if(StringUtils.isEmpty(cfgPassword))throw new ServiceException("请重复输入密码");

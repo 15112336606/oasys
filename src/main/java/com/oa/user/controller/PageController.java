@@ -22,4 +22,8 @@ public class PageController {
 	public String doUpdatePwd(){
 		return "sys/pwd_edit";
 	}
+	@RequestMapping("doLoginUI")
+	public String doLoginUI(){
+			return "login";
+	}
 }

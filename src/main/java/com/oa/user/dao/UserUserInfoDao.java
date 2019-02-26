@@ -35,4 +35,7 @@ public interface UserUserInfoDao {
 	
 	//修改密码
 	int updatePassword(@Param("username")String username,@Param("salt")String salt,@Param("password")String password);
+	
+	//通过用户名查找用户
+	UserUserInfo dofindObjectByUsername(String username);
 }

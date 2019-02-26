@@ -93,4 +93,11 @@ insert into oa_userinfo
 	modifiedTime=now()
 	where username=#{username}
 	</update>
+	
+	<!-- 通过用户名查找用户 -->
+	<select id="dofindObjectByUsername" resultType="com.oa.user.entity.UserUserInfo">
+	select * 
+	from oa_userinfo 
+	where username=#{username}
+	</select>
 </mapper>
