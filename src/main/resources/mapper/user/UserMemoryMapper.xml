@@ -14,4 +14,10 @@ select title,start,backgroundColor,borderColor
 from oa_memory 
 where username=#{username}
 </select>
+
+<!-- 删除备忘记录 -->
+<delete id="deleteObjects">
+delete from oa_memory where 
+start between #{time_start} and #{time_end}
+</delete>
 </mapper>

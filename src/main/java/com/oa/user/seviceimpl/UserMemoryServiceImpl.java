@@ -1,5 +1,7 @@
 package com.oa.user.seviceimpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,25 @@ public class UserMemoryServiceImpl implements UserMemoryService{
 	public List<Memory> findObjects(String username) {
 		if(username==null)throw new ServiceException("请先登录");
 		List<Memory> list = userMemoryDao.findObjects(username);
-		for(Memory l:list)System.out.println(l);
 		return list;
+	}
+	@Override
+	public int deleteObjects(String username, String date)  {
+		int rows=0;
+		try {
+			SimpleDateFormat sd = new SimpleDateFormat("yy-MM-dd");
+			Date time_start = sd.parse(date);
+			System.out.println(time_start);
+			long time = time_start.getTime();
+			long time2=time+1000*3600*24L;
+			Date time_end = new Date(time2);
+			System.out.println(time_end);
+			rows = userMemoryDao.deleteObjects(username, time_start, time_end);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(rows);
+		return rows;
 	}
 
 }

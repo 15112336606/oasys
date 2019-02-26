@@ -33,4 +33,11 @@ public class SysMemoryController {
 		for(Memory l:list)System.out.println(l);
 		return new JsonResult(list);
 	}
+	@RequestMapping("deleteObjects")
+	@ResponseBody
+	public JsonResult deleteObjects(String username,String date) throws Exception{
+		username="admin";
+		userMemoryService.deleteObjects(username, date);
+		return new JsonResult("delete ok");
+	}
 }

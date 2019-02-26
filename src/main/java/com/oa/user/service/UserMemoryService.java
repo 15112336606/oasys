@@ -8,4 +8,5 @@ import com.oa.user.vo.Memory;
 public interface UserMemoryService {
 int insertObject(UserMemory memory);
 List<Memory> findObjects(String username);
+int deleteObjects(String username,String date);
 }
