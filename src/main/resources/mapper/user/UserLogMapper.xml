@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oa.user.dao.UserLogDao">
+  	<sql id="querybyname">
+  		<where>
+			<if test="username!=null and username!=''">
+				createdUser like concat("%",#{username},"%")
+			</if>
+		</where>
+  	</sql>
+  	
+  	<!-- 基于用户名查找日志信息 -->
+  	<select id="findPageObjects" resultType="com.oa.user.entity.LogInfo">
+  		select * from oa_loginfo 
+  		<include refid="querybyname"/>
+  		order by createdTime desc
+		limit #{startIndex},#{pageSize}
+  	</select>
+  	
+  	<select id="getRowCount" resultType="int">
+  		select count(*) from oa_loginfo
+  		<include refid="querybyname"/>
+  	</select>
+  
+  <!-- 基于id查找日志信息 -->
+  <select id="findObjectById" resultType="com.oa.user.entity.LogInfo">
+  	select * from oa_loginfo where id=#{id}
+  </select>
+  
+  <!-- 插入记录 -->
+  <insert id="insertObject">
+  	insert into oa_loginfo (id,title,content,userid,createdUser)
+  	values(null,#{title},#{content},#{userid},#{createdUser})
+  </insert>
+  
+  <!-- 修改日志信息 -->
+  <update id="updateObject">
+  	update oa_loginfo set 
+  	title=#{title},content=#{content},userid=#{userid},
+  	createdUser=#{createdUser},modifiedTime=now()
+  	where id=#{id}
+  </update>
+  
+  <!-- 批量删除日志 -->
+  <delete id="deleteObjectsByIds">
+  	delete from oa_loginfo where id in 
+  	<foreach collection="ids" open="(" close=")" separator="," item="id">
+			#{id}
+	</foreach>
+  </delete>
+  
+  <select id="findCommentByLogId" resultType="com.oa.user.entity.LogComment">
+  	select * from oa_logcomment 
+  	<where>
+  		<if test="id!=null and id!=0">
+  		logid=#{id}
+  		</if>
+  	</where>
+  </select>
+  
+  <insert id="insertComment">
+  	insert into oa_logcomment (id,logid,commentcontent)
+  						values(#{id},#{logid},#{commentcontent})
+  </insert>
+  
+  <delete id="deleteComment">
+  	delete from oa_logcomment where logid in
+  	<foreach collection="logId" open="(" close=")" separator="," item="id">
+  	#{id}
+  	</foreach>
+  </delete>
+  
+  </mapper>

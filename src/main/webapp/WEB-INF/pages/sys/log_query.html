@@ -1,0 +1,111 @@
+<!-- Horizontal Form -->
+ <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">添加日志</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+        <div class="box-body">
+        			<h4 id="logtitle" >日志主题</h4><br>
+            <div class="col-sm-10" id="content"/>
+        </div>
+        
+        
+      <form class="form-horizontal">
+       	   <div class="form-group">
+            <h3>&nbsp&nbsp&nbsp&nbsp&nbsp评论区</h3>
+           <div class="col-sm-10"><br>
+       	 <div class="form-group" id="comment2">
+            <label for="content" class="col-sm-2 control-label">领导点评:</label>
+            <div class="col-sm-10">
+              <textarea name="description"  
+              id="comment1" placeholder="输入点评内容..." rows="5px" cols="100px" />
+            </div>
+          </div>
+        <!-- /.box-body -->
+        <div class="box-footer" >
+          <button id="comment3" type="button" class="btn btn-info pull-right btn-save">提交评论</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    	 <div >
+            <label for="content" class="col-sm-2 control-label" >历史点评:</label>
+            <div class="col-sm-10">
+              <textarea name="description" placeholder="该日志记录暂无点评,请在上方添加点评"
+              id="comment"  rows="5px" cols="100px" readonly="true"/>
+            </div>
+          <button type="button" class="btn btn-default pull-right btn-cancel">返回</button>
+          </div>
+      <!-- <div>
+				<div class="comment">历史评论:</div>
+				<div class="comment1">
+		              <textarea name="description" 
+		              id="comment2"  rows="5px" cols=20px />
+				</div>
+      </div> -->
+      
+  </div>
+  
+ <script type="text/javascript">
+ 
+  $(function(){
+	  $(".box-footer")
+	  .on("click",".btn-save",doSaveComment);
+	  
+	  $(".btn-cancel").click(doCancel)
+	  //呈现修改页面数据 
+	   var data=$("#mainContentId").data("rowData");
+	  if(data.logComment){
+		  $("#comment2").remove();
+		  $("#comment3").remove();
+	  }
+	  console.log("data",data)
+	  if(data)doInitEditFormData(data); 
+  });
+			//初始化修改页面数据
+		function doInitEditFormData(data) {
+				
+			$("#logtitle").html(data.logInfo.title);
+			$("#content").html(data.logInfo.content);
+			if(data.logComment){
+			$("#comment").html(data.logComment.commentcontent);
+			}
+		}  
+			
+		function doCancel() {
+			$("#mainContentId").load("log/doLogListUI.do", function() {
+				$("#mainContentId").removeData();
+			})
+		}
+		
+		function doSaveComment() {
+			//1.获取表单数据
+			var params = {
+					commentcontent : $("#comment1").val(),
+				}
+			var rowData = $("#mainContentId").data("rowData");
+			 params.logid=rowData.logInfo.id;
+			//2.定义url
+			var url = "log/doSaveComment.do";
+			//3.异步提交数据
+			$.post(url, params, function(result) {
+				if (result.state == 1) {
+					alert(result.message);
+					doCancel();
+				} else {
+					alert(result.message);
+				}
+			});
+		}
+
+
+	</script>
+    
+    
+    
+    
+    
+    
+    
+    
+    

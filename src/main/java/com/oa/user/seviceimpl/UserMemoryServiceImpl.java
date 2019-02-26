@@ -37,16 +37,13 @@ public class UserMemoryServiceImpl implements UserMemoryService{
 		try {
 			SimpleDateFormat sd = new SimpleDateFormat("yy-MM-dd");
 			Date time_start = sd.parse(date);
-			System.out.println(time_start);
 			long time = time_start.getTime();
 			long time2=time+1000*3600*24L;
 			Date time_end = new Date(time2);
-			System.out.println(time_end);
 			rows = userMemoryDao.deleteObjects(username, time_start, time_end);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(rows);
 		return rows;
 	}
 

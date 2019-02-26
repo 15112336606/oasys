@@ -1,0 +1,111 @@
+<!-- Horizontal Form -->
+ <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">日志</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal">
+        <div class="box-body">
+        <div class="form-group">
+				<label for="userid" class="col-sm-2 control-label">用户ID</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="userid" placeholder="输入用户ID" >
+				</div>
+		 </div>
+        <div class="form-group">
+				<label for="username" class="col-sm-2 control-label">用户名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="username" placeholder="输入用户名" >
+				</div>
+		 </div>
+          <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">日志主题</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control"  id="title" placeholder="输入日志主题">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="content" class="col-sm-2 control-label">日志内容</label>
+            <div class="col-sm-10">
+              <textarea name="description" class="form-control"  id="content" placeholder="输入日志内容..." rows="20px" />
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="button" class="btn btn-default btn-cancel">返回</button>
+          <button type="button" class="btn btn-info pull-right btn-save">提交</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+      
+  </div>
+  
+ <script type="text/javascript">
+ 
+  $(function(){
+	  $(".box-footer")
+	  .on("click",".btn-cancel",doCancel)
+	  .on("click",".btn-save",doSaveOrUpdate);
+	  
+	  //呈现修改页面数据 
+	   var data=$("#mainContentId").data("rowData");
+	  console.log("data",data)
+	  if(data)doInitEditFormData(data); 
+  });
+			//初始化修改页面数据
+		  function doInitEditFormData(data) {
+			$("#title").val(data.title);
+			$("#content").val(data.content);
+			$("#userid").val(data.userid);
+			$("#username").val(data.createdUser);
+		}  
+			
+		function doCancel() {
+			$("#mainContentId").load("log/doLogListUI.do", function() {
+				$("#mainContentId").removeData();
+			})
+		}
+		
+		function doSaveOrUpdate() {
+			//1.获取表单数据
+			var params = doGetEditFormData();
+			console.log(params);
+			var rowData = $("#mainContentId").data("rowData");
+			 if(rowData)params.id=rowData.id;
+			//2.定义url
+			var insertUrl = "log/doSaveObject.do";
+			var updateUrl = "log/doUpdateObject.do";
+			var url = rowData ? updateUrl : insertUrl;
+			//3.异步提交数据
+			$.post(url, params, function(result) {
+				if (result.state == 1) {
+					alert(result.message);
+					doCancel();
+				} else {
+					alert(result.message);
+				}
+			});
+		}
+
+		function doGetEditFormData() {
+			var params = {
+				title : $("#title").val(),
+				content : $("#content").val(),
+				userid : $("#userid").val(),
+				createdUser : $("#username").val(),
+			}
+			return params;
+		}
+
+	</script>
+    
+    
+    
+    
+    
+    
+    
+    
+    

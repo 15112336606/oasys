@@ -13,6 +13,9 @@
 							<button type="button" class="btn btn-default btn-search">
 								<i class="fa fa-search"></i>
 							</button>
+							<button type="button" class="btn btn-default btn-insert">添加</button>
+							<button type="button" class="btn btn-default btn-update">修改</button>
+							<button type="button" class="btn btn-default btn-query">查看</button>
 							<button type="button" class="btn btn-default btn-delete">删除</button>
 						</div>
 					</div>
@@ -25,11 +28,8 @@
 						<tr>
 							<th><input type="checkbox" id="checkAll">全选</th>
 							<th>用户名</th>
-							<th>操作</th>
-							<th>请求方法</th>
-							<th>请求参数</th>
-							<th>IP地址</th>
-							<th>执行时间</th>
+							<th>日志主题</th>
+							<th>添加时间</th>
 						</tr>
 					</thead>
 					<tbody id="tbodyId">
@@ -59,10 +59,117 @@
 		$(".box-header").on("click",".btn-search",doQueryObjects)
 		.on("click",".btn-delete",doDeleteObjects)
 		$("thead").on("change","#checkAll",doChangeTBodyCheckBoxState)
-		//$("#searchNameId").click(doQueryObjects);
 		//点击tbody中的checkbox时修改thead中的checkbox
 		$("#tbodyId").on("change",".cBox",doChangeTHeadCheckBoxState)
+		
+		//添加修改操作
+		$(".box-header").on("click",".btn-insert,.btn-update",doLoadEditUI)
+		//查看操作
+		$(".box-header").on("click",".btn-query",doLoadQueryUI)
+		
 	})
+	
+	
+	function doLoadQueryUI(){
+		var id=doGetCheckedIds();
+		   if(!id){
+			  alert("请先选择");
+			  return;
+		   }else if(id.length>1){
+				 alert("请选择单个日志进行查看");
+				 return;
+			} 
+		   //基于id进行查询并加载编辑页面
+		   doFindQureyObjectById(id[0]);//$("#mainContentId").load("log/doLogQueryUI.do" 
+	}
+	
+	function doFindQureyObjectById(id){
+		var params={"id":id};
+		var url="log/doFindQureyObjectById.do";
+		$.getJSON(url,params,function(result){//JsonResult
+			    console.log("result",result) 
+			   if(result.state==1){
+				  $("#mainContentId").data("rowData",result.data); 
+				  var title=result.data.logInfo.createdUser+"的日志";
+		          doLoadQureyPage(title);
+			   }else{
+				  alert(result.message);
+			   }
+		   });
+	}
+	
+	function doLoadQureyPage(title){
+		 var url="log/doLogQueryUI.do"
+			   $("#mainContentId").load(url,function(){
+				   $(".box-title").html(title);
+			   }) 
+	}
+	
+	
+	function doLoadEditUI(){
+		var title;
+		   if($(this).hasClass("btn-insert")){
+			   title="添加日志";
+			   doLoadPage(title);
+		   }else if($(this).hasClass("btn-update")){
+			   title="修改日志";
+			   var id=doGetCheckedIds();
+			   /* console.log("id="+id) */
+			   if(!id){
+				  alert("请先选择");
+				  return;
+			   } else if(id.length>1){
+				   alert("请选择单个日志进行修改");
+					  return;
+			   }
+			   //基于id进行查询并加载编辑页面
+			   doFindObjectById(id[0],title);
+		   }
+	}
+	
+	
+	function doFindObjectById(id,title){
+		   //1.params
+		   var params={"id":id};
+		   //2.url
+		   var url="log/doFindObjectById.do";
+		   //3.ajax request
+		   $.getJSON(url,params,function(result){//JsonResult
+			   // console.log("result",result) 
+			   if(result.state==1){
+				  $("#mainContentId").data("rowData",result.data); 
+		          doLoadPage(title);
+			   }else{
+				  alert(result.message);
+			   }
+		   });
+	   }
+ 	
+	 function doLoadPage(title){
+		   var url="log/doLogEditUI.do"
+		   $("#mainContentId").load(url,function(){
+			   $(".box-title").html(title);
+		   }) 
+	   }
+	 //
+	 function doGetCheckedId(){
+		 return $("tbody input[name='cItem']:checked").val();
+	   }
+	 
+	 function doGetCheckedIds(){
+			//1.定义数组,存储选中的id值
+			var array=[];//new Array();
+			//2.迭代tbody中的复选框checkbox
+			$("#tbodyId input[type='checkbox']").each(function(){//each为jQuery中的一个迭代函数
+				//当this指向的checkbox选中时
+				if($(this).prop("checked")){
+					//将选中的checkbox值存储到array
+					array.push($(this).val());
+				}
+			})
+			return array;
+		}
+	
 	//修改tHead中checkbox状态
 	function doChangeTHeadCheckBoxState(){
 		//1.给定一个标记初始化
@@ -115,19 +222,7 @@
 			$("#pageId").data("pageCurrent",pageCurrent);
 		}
 	}
-	function doGetCheckedIds(){
-		//1.定义数组,存储选中的id值
-		var array=[];//new Array();
-		//2.迭代tbody中的复选框checkbox
-		$("#tbodyId input[type='checkbox']").each(function(){//each为jQuery中的一个迭代函数
-			//当this指向的checkbox选中时
-			if($(this).prop("checked")){
-				//将选中的checkbox值存储到array
-				array.push($(this).val());
-			}
-		})
-		return array;
-	}
+	
 	function doQueryObjects(){
 		//1.修改当前页码值
 		$("#pageId").data("pageCurrent",1);
@@ -146,10 +241,13 @@
 		var url = "log/doFindPageObjects.do";
 		//3.发起异步请求获取数据(借助jquery中的getJSON)
 		$.getJSON(url, params, function(result) {//callback
-			console.log(result);
+			 //console.log("aaa",result); 
 			doHandleResponseResult(result);
+			//$("#mainContentId").data("PO",result);
 		})//ajax(xhr)
 	}
+	
+		
 	//处理服务器的响应结果
 	function doHandleResponseResult(result) {
 		if (result.state == 1) {//jsonResult.state
@@ -180,13 +278,11 @@
 		//console.log(records);
 	}
 	function doCreateTds(data){
+		console.log(new Date(data.createdTime).toLocaleString());
 		   var tds="<td><input type='checkbox' class='cBox' name='cItem' value='"+data.id+"'></td>"+
-			   	 "<td>"+data.username+"</td>"+
-			     "<td>"+data.operation+"</td>"+
-			     "<td>"+data.method+"</td>"+
-			     "<td>"+data.params+"</td>"+
-			     "<td>"+data.ip+"</td>"+
-			     "<td>"+data.time+"</td>";	   
+			   	 "<td>"+data.createdUser+"</td>"+
+			     "<td>"+data.title+"</td>"+
+			     "<td>"+new Date(data.createdTime).toLocaleString()+"</td>";
 	return tds;
 	   }
 

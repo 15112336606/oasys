@@ -1,123 +1,101 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="dist/css/font-awesome.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet" href="dist/css/ionicons.min.css">
-<!-- fullCalendar 2.2.5-->
-<link rel="stylesheet" href="plugins/fullcalendar/fullcalendar.min.css">
-<link rel="stylesheet"
-	href="plugins/fullcalendar/fullcalendar.print.css" media="print">
-<!-- Theme style -->
-<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-</head>
-<body>
-	<section class="content">
-		<div class="row">
-			<div class="col-md-3">
-				<div class="box box-solid">
-					<div class="box-header with-border">
-						<h4 class="box-title">可拆卸事件</h4>
-					</div>
-					<div class="box-body">
-						<!-- the events -->
-						<div id="external-events">
-							<div
-								class="external-event bg-green ui-draggable ui-draggable-handle"
-								style="position: relative;">外出</div>
-							<div
-								class="external-event bg-yellow ui-draggable ui-draggable-handle"
-								style="position: relative;">回家</div>
-							<div
-								class="external-event bg-aqua ui-draggable ui-draggable-handle"
-								style="position: relative;">工作</div>
-							<div
-								class="external-event bg-light-blue ui-draggable ui-draggable-handle"
-								style="position: relative;">吃饭</div>
-							<div
-								class="external-event bg-red ui-draggable ui-draggable-handle"
-								style="position: relative;">睡觉</div>
-							<div class="checkbox">
-								<label for="drop-remove"> <input type="checkbox"
-									id="drop-remove"> remove after drop
-								</label>
-							</div>
+<section class="content">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<h4 class="box-title">可拆卸事件</h4>
+				</div>
+				<div class="box-body">
+					<!-- the events -->
+					<div id="external-events">
+						<div
+							class="external-event bg-green ui-draggable ui-draggable-handle"
+							style="position: relative;">外出</div>
+						<div
+							class="external-event bg-yellow ui-draggable ui-draggable-handle"
+							style="position: relative;">回家</div>
+						<div
+							class="external-event bg-aqua ui-draggable ui-draggable-handle"
+							style="position: relative;">工作</div>
+						<div
+							class="external-event bg-light-blue ui-draggable ui-draggable-handle"
+							style="position: relative;">吃饭</div>
+						<div
+							class="external-event bg-red ui-draggable ui-draggable-handle"
+							style="position: relative;">睡觉</div>
+						<div class="checkbox">
+							<label for="drop-remove"> <input type="checkbox"
+								id="drop-remove"> remove after drop
+							</label>
 						</div>
 					</div>
-					<!-- /.box-body -->
 				</div>
-				<!-- /. box -->
-				<div class="box box-solid">
-					<div class="box-header with-border">
-						<h3 class="box-title">创建事件</h3>
+				<!-- /.box-body -->
+			</div>
+			<!-- /. box -->
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">创建事件</h3>
+				</div>
+				<div class="box-body">
+					<div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+						<!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+						<ul class="fc-color-picker" id="color-chooser">
+							<li><a class="text-aqua" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-blue" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-light-blue" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-teal" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-yellow" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-orange" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-green" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-lime" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
+							<li><a class="text-purple" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-fuchsia" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-muted" href="#"><i
+									class="fa fa-square"></i></a></li>
+							<li><a class="text-navy" href="#"><i
+									class="fa fa-square"></i></a></li>
+						</ul>
 					</div>
-					<div class="box-body">
-						<div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-							<!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-							<ul class="fc-color-picker" id="color-chooser">
-								<li><a class="text-aqua" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-blue" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-light-blue" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-teal" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-yellow" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-orange" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-green" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-lime" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-red" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-purple" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-fuchsia" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-muted" href="#"><i
-										class="fa fa-square"></i></a></li>
-								<li><a class="text-navy" href="#"><i
-										class="fa fa-square"></i></a></li>
-							</ul>
+					<!-- /btn-group -->
+					<div class="input-group">
+						<input id="new-event" type="text" class="form-control"
+							placeholder="Event Title">
+
+						<div class="input-group-btn">
+							<button id="add-new-event" type="button"
+								class="btn btn-primary btn-flat">Add</button>
 						</div>
 						<!-- /btn-group -->
-						<div class="input-group">
-							<input id="new-event" type="text" class="form-control"
-								placeholder="Event Title">
-
-							<div class="input-group-btn">
-								<button id="add-new-event" type="button"
-									class="btn btn-primary btn-flat">Add</button>
-							</div>
-							<!-- /btn-group -->
-						</div>
-						<!-- /input-group -->
 					</div>
+					<!-- /input-group -->
 				</div>
-			<div class="box box-solid">
-			<div class="box-header with-border bg-red" align="center">
-						<h3 class="box-title">点击日期可删除备忘事件</h3>
-					</div>
-					</div>
 			</div>
-			
-			<!-- /.col -->
-			<div class="col-md-9">
-				<div class="box box-primary">
-					<div class="box-body no-padding">
-						<!-- THE CALENDAR -->
-						<div id="calendar" class="fc fc-ltr fc-unthemed">
-							<!-- 						<div class="fc-toolbar">
+			<div class="box box-solid">
+				<div class="box-header with-border bg-red" align="center">
+					<h3 class="box-title">点击日期可删除备忘事件</h3>
+				</div>
+			</div>
+		</div>
+
+		<!-- /.col -->
+		<div class="col-md-9">
+			<div class="box box-primary">
+				<div class="box-body no-padding">
+					<!-- THE CALENDAR -->
+					<div id="calendar" class="fc fc-ltr fc-unthemed">
+						<!-- 						<div class="fc-toolbar">
 								<div class="fc-left">
 									<div class="fc-button-group">
 										<button type="button"
@@ -609,34 +587,34 @@
 								</div>
 							</div>
 						-->
-						</div>
 					</div>
-					<!-- /.box-body -->
 				</div>
-				<!-- /. box -->
+				<!-- /.box-body -->
 			</div>
-			<!-- /.col -->
+			<!-- /. box -->
 		</div>
-		<!-- /.row -->
-	</section>
-	<!-- jQuery 2.2.3 -->
-	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
-	<!-- Bootstrap 3.3.6 -->
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<!-- jQuery UI 1.11.4 -->
-	<script src="dist/js/jquery-ui.min.js"></script>
-	<!-- Slimscroll -->
-	<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-	<!-- FastClick -->
-	<script src="plugins/fastclick/fastclick.js"></script>
-	<!-- AdminLTE App -->
-	<script src="dist/js/app.min.js"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="dist/js/demo.js"></script>
-	<!-- fullCalendar 2.2.5 -->
-	<script src="dist/js/moment.min.js"></script>
-	<script src="plugins/fullcalendar/fullcalendar.min.js"></script>
-	<script>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</section>
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="dist/js/jquery-ui.min.js"></script>
+<!-- Slimscroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo1.js"></script>
+<!-- fullCalendar 2.2.5 -->
+<script src="dist/js/moment.min.js"></script>
+<script src="plugins/fullcalendar/fullcalendar.min.js"></script>
+<script>
 		$(function() {
 			$(".no-padding").on(
 					"click",
@@ -858,5 +836,3 @@
 			});
 		});
 	</script>
-</body>
-</html>

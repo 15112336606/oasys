@@ -8,6 +8,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>OA- SYS | Starter</title>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="dist/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="dist/css/ionicons.min.css">
+<!-- fullCalendar 2.2.5-->
+<link rel="stylesheet" href="plugins/fullcalendar/fullcalendar.min.css">
+<link rel="stylesheet"
+	href="plugins/fullcalendar/fullcalendar.print.css" media="print">
+<!-- Theme style -->
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -463,6 +477,7 @@ desired effect
 	<script type="text/javascript">
 	//页面加载完成以后执行	
 	$(function(){
+		doLoadUI("load-log-id","log/doLogListUI.do");
 		doLoadUI("load-pwd-id","user/doUpdatePwdUI.do");
 		doLoadUI("load-password-id","doUpdatePwd.do");
 		doLoadUI("load-user-id","user/doUserListUI.do");
@@ -481,16 +496,7 @@ desired effect
 			$("#mainContentId").load(url);
 		})
 	}
-  /*$(function(){
-	  在id为load-log-id的对象上注册一个点击事件
-	  $("#load-log-id").click(function(){//事件处理函数
-		  //在id为mainContentId的位置异步加载一个url对应的资源
-		  //并将服务器返回的资源插入到mainContentId位置
-		  $("#mainContentId").load("log/doLogListUI.do");
-	  	  //其中load函数为juqery中的一个异步加载函数(底层会
-	  	  //通过XmlHttpRequest对象发起请求)
-	  })
-  })*/
+
 </script>
 	<!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

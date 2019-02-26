@@ -30,7 +30,6 @@ public class SysMemoryController {
 	public JsonResult findObjects(String username){
 		username="admin";
 		List<Memory> list = userMemoryService.findObjects(username);
-		for(Memory l:list)System.out.println(l);
 		return new JsonResult(list);
 	}
 	@RequestMapping("deleteObjects")
